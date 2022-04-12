@@ -1,10 +1,10 @@
-function addToQueue(runTask, queue) {
-  // addToQueue runs when the 'Queue it up!' button is clicked.
-  // If runTask is running, push runTask to array
+function addToQueue(runTask, queue, thisNum, blocked) {
   const run = () => runTask(function() {
-    // The function passed to runTask will run when the task is done.
-    //
-    (queue.shift())();
+    if(queue.length) {
+      (queue.shift())();
+    };
   });
   queue.push(run);
+  console.log(`${thisNum}, ${clickNum}`)
+  if(thisNum === 1) (queue.shift())();
 }

@@ -12,7 +12,6 @@
     <button class="turn">Queue it up!</button>
     <div class="output"></div>
     <script src="jquery.min.js"></script>
-    <script src="queue.js"></script>
     <script>
       // Config
       var USE_ABORT = false;
@@ -20,6 +19,17 @@
       var TASK_TIME_MAX = 2; // seconds
       var clickNum = 1;
       const queue = [];
+
+      function addToQueue(runTask, queue, thisNum) {
+        const run = () => runTask(function() {
+          if(queue.length) {
+            (queue.shift())();
+          };
+        });
+        queue.push(run);
+        if(thisNum === 1) (queue.shift())();
+      }
+
       $(".turn").click(function (evt) {
         var thisNum = clickNum;
         clickNum += 1;
@@ -59,7 +69,7 @@
           };
           requestAnimationFrame(loop);
         };
-        addToQueue(run, queue);
+        addToQueue(run, queue, thisNum);
       });
     </script>
   </body>
